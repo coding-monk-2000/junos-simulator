@@ -1,0 +1,14 @@
+# Python
+__pycache__/
+
+
+# Virtual environments
+.venv
+
+
+# SSH host key (security sensitive)
+host_key.rsa
+
+# IDE
+.vscode/
+
