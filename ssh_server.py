@@ -89,28 +89,42 @@ def create_host_key():
 
 def handle_client_connection(client_socket, host_key):
     """Handle individual client connections"""
+    transport = None
     try:
+        # Set socket timeout to prevent hanging
+        client_socket.settimeout(30)
+        
         transport = paramiko.Transport(client_socket)
         transport.add_server_key(host_key)
+        
+        # Set local version string to identify as JUNOS device
+        transport.local_version = "SSH-2.0-Juniper_22.4R1.10"
         
         server = DeviceSSHServer()
         transport.start_server(server=server)
         
-        # Wait for authentication
+        # Wait for authentication with timeout
         channel = transport.accept(30)
         if channel is None:
-            print("No channel opened")
+            print("No channel opened - authentication may have failed")
             return
             
+        print("Client authenticated successfully")
+        
         # Create CLI instance and handle session
         cli = DeviceCLI()
         handle_ssh_session(channel, cli)
         
+    except paramiko.SSHException as e:
+        print(f"SSH protocol error: {e}")
+    except socket.timeout:
+        print("Connection timed out")
     except Exception as e:
         print(f"Client connection error: {e}")
     finally:
         try:
-            transport.close()
+            if transport:
+                transport.close()
         except:
             pass
 

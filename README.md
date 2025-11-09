@@ -45,7 +45,10 @@ Once connected, you can use these commands:
 - `show version` - Display device version information
 - `show interfaces` - Display interface status
 - `show interface <name>` - Display detailed interface information
-- `show system` - Display system information
+- `show system` or `show system uptime` - Display system uptime
+- `show system information` - Display hardware inventory
+- `show system processes` - Display running processes
+- `show system storage` - Display filesystem information
 - `exit` or `quit` - Exit the session
 
 ## Example Session
@@ -54,30 +57,29 @@ Once connected, you can use these commands:
 $ ssh admin@localhost -p 2222
 admin@localhost's password: admin
 
-Welcome to Simulated Network Device
-Please login to continue.
+Welcome to Simulated JUNOS Device
 
-simulated-device> show version
+JUNOS-MX> show system uptime
 
-Device Information:
-  Model: Simulated Network Device v1.0
-  Software Version: SimOS 1.0.0
-  Build Date: November 9, 2025
-  Serial Number: SIM123456789
-  Uptime: 1 day, 2 hours, 30 minutes
+Current time: 2025-11-09 14:30:42 UTC
+Time Source:  LOCAL CLOCK 
+System booted: 2025-10-25 07:18:00 UTC (2w1d 07:12 ago)
+Protocols started: 2025-10-25 07:19:32 UTC (2w1d 07:11 ago)
+Last configured: 2025-11-08 14:25:33 UTC (1d 00:05 ago) by admin
+ 2:30PM  up 15 days,  7:12, 1 user, load averages: 0.23, 0.18, 0.15
 
-simulated-device> show interfaces
+JUNOS-MX> show interfaces
 
 Interface Status:
-----------------------------------------
-Interface    Status   Description         
-----------------------------------------
-ge-0/0/0     up       Data Interface      
-ge-0/0/1     down     Data Interface      
-ge-0/0/2     up       Data Interface      
-lo0          up       Management          
+--------------------------------------------------
+Interface       Status   Description              
+--------------------------------------------------
+ge-0/0/0        up       Gigabit Ethernet         
+ge-0/0/1        down     Gigabit Ethernet         
+ge-0/0/2        up       Gigabit Ethernet         
+lo0             up       Loopback Interface       
 
-simulated-device> exit
+JUNOS-MX> exit
 Goodbye!
 ```
 
